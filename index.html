@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instauto - AI 인스타그램 댓글 자동화 봇</title>
+    <meta name="description" content="AI가 대신 댓글 달아주는 인스타그램 자동화 봇. 자연스러운 댓글 생성, 대량 작업, 안전한 자동화.">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            padding: 60px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .feature {
+            padding: 25px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            border-radius: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .feature h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .feature p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .pricing {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .pricing h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .price {
+            font-size: 3.5rem;
+            font-weight: 900;
+        }
+
+        .price span {
+            font-size: 1.2rem;
+            font-weight: 400;
+        }
+
+        .trial-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 20px;
+            border-radius: 50px;
+            margin-top: 15px;
+            font-size: 0.95rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 18px 50px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .policy-section {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+
+        .policy-section h3 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .policy-section p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                padding: 40px 25px;
+            }
+
+            .logo {
+                font-size: 2.2rem;
+            }
+
+            .price {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section class="hero">
+        <div class="container">
+            <div class="card">
+                <h1 class="logo">📸 Instauto</h1>
+                <p class="tagline">AI가 대신 댓글 달아주는 인스타그램 자동화 봇</p>
+
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">🤖</div>
+                        <h3>AI 댓글 자동 생성</h3>
+                        <p>AI가 게시물 내용을 분석하고, 상황에 맞는 자연스러운 댓글을 작성합니다.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">⚡</div>
+                        <h3>대량 작업, 손쉽게</h3>
+                        <p>한 번에 여러 게시물에 댓글을 달 수 있어요. 수동 작업 시간을 대폭 줄여드립니다.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🛡️</div>
+                        <h3>안전한 자동화</h3>
+                        <p>사람처럼 마우스를 움직이고 대기 시간을 조절해서 계정 제재 위험을 최소화합니다.</p>
+                    </div>
+                </div>
+
+                <div class="pricing">
+                    <h2>월 정기 구독</h2>
+                    <div class="price">₩9,900<span>/월</span></div>
+                    <div class="trial-badge">🎁 3일 무료 체험</div>
+                </div>
+
+                <div style="text-align: center;">
+                    <a href="#download" class="cta-button">무료로 시작하기</a>
+                </div>
+
+                <div class="policy-section">
+                    <h3>📋 이용약관 및 환불정책</h3>
+                    <p>
+                        <strong>서비스 이용:</strong> Instauto는 월 단위 구독 서비스입니다. 구독 시작일로부터 30일간 서비스를 이용할 수 있으며, 자동 갱신됩니다.
+                    </p>
+                    <p>
+                        <strong>무료 체험:</strong> 최초 가입 시 3일간 모든 기능을 무료로 체험하실 수 있습니다. 체험 기간 동안 충분히 테스트해보신 후 구독 여부를 결정해주세요.
+                    </p>
+                    <p>
+                        <strong>환불 정책:</strong> 무료 체험 기간(3일) 동안 충분히 서비스를 테스트하신 후 결제가 진행되므로, 결제 후에는 환불이 불가합니다.
+                    </p>
+                    <p>
+                        <strong>문의:</strong> 서비스 관련 문의는 이메일로 연락해 주세요.
+                    </p>
+                </div>
+
+                <div class="footer">
+                    <p>© 2024 Instauto. All rights reserved.</p>
+                    <p><a href="mailto:support@instauto.kr">support@instauto.kr</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
