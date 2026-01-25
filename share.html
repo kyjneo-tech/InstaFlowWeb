@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InstaFlow - 무료 나눔</title>
+    <title>InstaFlow - 무료 배포</title>
     <meta name="robots" content="noindex, nofollow">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -18,133 +18,111 @@
 
         .container {
             max-width: 600px;
-            margin: 40px auto;
+            margin: 60px auto;
             background: white;
-            padding: 40px;
+            padding: 50px;
             border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
         }
 
         h1 {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
+            font-size: 1.6rem;
+            margin-bottom: 20px;
             color: #2c3e50;
-        }
-
-        .profile {
-            display: flex;
-            align-items: center;
-            margin-bottom: 30px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 20px;
-        }
-
-        .profile-img {
-            width: 50px;
-            height: 50px;
-            background: #ddd;
-            border-radius: 50%;
-            margin-right: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .profile-text p {
-            margin: 0;
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        .profile-text strong {
-            color: #333;
-            font-size: 1rem;
+            font-weight: 700;
+            text-align: center;
         }
 
         .content {
-            margin-bottom: 30px;
+            margin-bottom: 40px;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            color: #555;
+            text-align: justify;
         }
 
         .download-box {
             background: #f1f3f5;
-            padding: 20px;
+            padding: 30px;
             border-radius: 8px;
             text-align: center;
-            margin: 20px 0;
+            margin: 30px 0;
+            border: 1px solid #dee2e6;
         }
 
         .btn {
             display: inline-block;
             background-color: #228be6;
             color: white;
-            padding: 12px 30px;
+            padding: 15px 40px;
             border-radius: 6px;
             text-decoration: none;
-            font-weight: bold;
-            transition: background 0.2s;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: background 0.2s, transform 0.1s;
+            box-shadow: 0 4px 6px rgba(34, 139, 230, 0.2);
         }
 
         .btn:hover {
             background-color: #1c7ed6;
+            transform: translateY(-2px);
         }
 
         .note {
             font-size: 0.85rem;
             color: #868e96;
-            margin-top: 10px;
+            margin-top: 15px;
         }
 
-        ul {
-            padding-left: 20px;
-            color: #555;
-        }
-
-        li {
-            margin-bottom: 8px;
+        .footer-note {
+            text-align: center;
+            color: #adb5bd;
+            font-size: 0.8rem;
+            margin-top: 40px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <div class="profile">
-            <div class="profile-img">👨‍💻</div>
-            <div class="profile-text">
-                <strong>김사장 (개발자)</strong>
-                <p>쇼핑몰 운영 중 / 취미 개발</p>
-            </div>
-        </div>
-
         <div class="content">
-            <h1>답방 가기 귀찮아서 만든 툴 공유합니다</h1>
-            <p>안녕하세요. 저도 쇼핑몰 하면서 인스타 관리하다 보니 하루가 다 가더라고요.<br>
-                그래서 짬내서 <strong>댓글/답방 자동으로 해주는 프로그램</strong> 하나 만들었습니다.</p>
-            <br>
-            <p>주변 사장님들도 좀 달라고 하셔서, 매번 파일 보내드리기 귀찮아서 여기 올려둡니다.<br>
-                그냥 다운받아서 쓰시면 됩니다. (돈 안 받아요 ㅋㅋ)</p>
+            <h1>InstaFlow 자동화 프로그램 공유</h1>
+
+            <p>안녕하세요. 쇼핑몰 운영 및 개발 업무를 겸하고 있습니다.</p>
+
+            <p>인스타그램 마케팅을 진행하면서 반복적인 댓글 및 답방 업무에 소요되는 시간이 많아, 이를 효율적으로 개선하고자 직접 프로그램을 개발하였습니다.</p>
+
+            <p>주변 대표님들께서도 사용을 원하시는 분들이 많아, 개별적으로 파일을 전달해 드리는 대신 이 페이지를 통해 공유해 드리고자 합니다.</p>
+
+            <p>필요하신 분들은 아래 버튼을 통해 프로그램을 다운로드하여 자유롭게 사용하시기 바랍니다.</p>
 
             <div class="download-box">
-                <h3>💾 InstaFlow (무료 버전)</h3>
-                <p style="margin-bottom: 15px; font-size: 0.9rem;">Windows 전용 / 설치 필요 없음</p>
-                <!-- 아래 링크는 나중에 실제 파일 링크로 교체하셔야 합니다 -->
-                <a href="#" class="btn" onclick="alert('아직 파일이 업로드되지 않았습니다. 잠시 후 다시 시도해주세요.'); return false;">다운로드
-                    (v1.0)</a>
-                <p class="note">바이러스 없습니다. 윈도우 디펜더가 뭐라 하면 '추가 정보 -> 실행' 누르세요.</p>
+                <h3 style="margin-bottom: 10px; color:#333;">💾 InstaFlow (무료 버전)</h3>
+                <p style="margin-bottom: 20px; font-size: 0.9rem; color:#666;">Windows 전용 / 무설치 실행</p>
+
+                <!-- 아래 링크는 실제 파일 링크로 교체 필요 -->
+                <a href="#" class="btn" onclick="alert('파일 준비 중입니다.'); return false;">다운로드 (v1.0.2)</a>
+
+                <p class="note">
+                    * Windows Defender 경고 발생 시 '추가 정보' -> '실행'을 클릭해 주세요.<br>
+                    (개인 개발 프로그램 특성상 발생하는 단순 경고입니다.)
+                </p>
             </div>
 
-            <h3>사용 방법</h3>
-            <ul>
-                <li>1. 위 버튼 눌러서 다운로드 (Zip 파일)</li>
-                <li>2. 압축 풀고 <strong>InstaFlow.exe</strong> 실행</li>
-                <li>3. 인스타 로그인 되어 있는 크롬 창 띄워두기</li>
-                <li>4. 끝. (알아서 돌아갑니다)</li>
-            </ul>
+            <!-- 추후 유튜브 영상 추가 예정 -->
+            <p style="text-align: center; color: #888; font-size: 0.9rem;">
+                ※ 사용 방법 가이드 영상은 추후 업데이트될 예정입니다.
+            </p>
         </div>
 
-        <p style="text-align: center; color: #adb5bd; font-size: 0.8rem; margin-top: 50px;">
-            문제 있으면 톡 주세요. (근데 저도 본업이 있어서 답장 느릴 수 있음)
-        </p>
+        <div class="footer-note">
+            프로그램 관련 문의는 카카오톡으로 남겨주시면<br>
+            확인하는 대로 답변 드리겠습니다.
+        </div>
     </div>
 </body>
 
