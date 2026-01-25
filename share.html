@@ -6,112 +6,173 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InstaFlow - 무료 배포</title>
     <meta name="robots" content="noindex, nofollow">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <style>
         body {
-            font-family: 'Noto Sans KR', sans-serif;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
             background-color: #f8f9fa;
             color: #333;
-            line-height: 1.6;
+            line-height: 1.75;
             padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
         }
 
         .container {
-            max-width: 600px;
-            margin: 60px auto;
+            width: 100%;
+            max-width: 540px;
             background: white;
-            padding: 50px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            padding: 60px 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+            text-align: left;
         }
 
         h1 {
-            font-size: 1.6rem;
-            margin-bottom: 20px;
-            color: #2c3e50;
+            font-size: 1.7rem;
+            margin-bottom: 40px;
+            color: #111;
             font-weight: 700;
             text-align: center;
+            letter-spacing: -0.5px;
         }
 
-        .content {
+        .intro-text p {
+            margin-bottom: 24px;
+            color: #444;
+            font-size: 1.05rem;
+            word-break: keep-all;
+        }
+
+        .intro-text p:last-child {
             margin-bottom: 40px;
         }
 
-        .content p {
-            margin-bottom: 15px;
-            color: #555;
-            text-align: justify;
-        }
-
         .download-box {
-            background: #f1f3f5;
-            padding: 30px;
-            border-radius: 8px;
+            background: #f8f9fa;
+            padding: 35px;
+            border-radius: 16px;
             text-align: center;
-            margin: 30px 0;
-            border: 1px solid #dee2e6;
+            border: 1px solid #e9ecef;
+            margin-top: 20px;
         }
 
-        .btn {
+        .download-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .badge-free {
+            background-color: #5c7cfa;
+            color: white;
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            vertical-align: middle;
+        }
+
+        .download-subtitle {
+            font-size: 0.9rem;
+            color: #868e96;
+            margin-bottom: 25px;
+        }
+
+        .btn-download {
             display: inline-block;
             background-color: #228be6;
             color: white;
-            padding: 15px 40px;
-            border-radius: 6px;
+            padding: 18px 45px;
+            border-radius: 12px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 1.1rem;
-            transition: background 0.2s, transform 0.1s;
-            box-shadow: 0 4px 6px rgba(34, 139, 230, 0.2);
+            font-size: 1.15rem;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(34, 139, 230, 0.3);
+            width: 100%;
+            box-sizing: border-box;
         }
 
-        .btn:hover {
+        .btn-download:hover {
             background-color: #1c7ed6;
             transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(34, 139, 230, 0.4);
         }
 
-        .note {
+        .note-text {
             font-size: 0.85rem;
             color: #868e96;
-            margin-top: 15px;
+            margin-top: 20px;
+            line-height: 1.5;
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed #dee2e6;
+            text-align: left;
         }
 
         .footer-note {
             text-align: center;
             color: #adb5bd;
-            font-size: 0.8rem;
-            margin-top: 40px;
-            border-top: 1px solid #eee;
-            padding-top: 20px;
+            font-size: 0.85rem;
+            margin-top: 50px;
+            border-top: 1px solid #f1f3f5;
+            padding-top: 30px;
+            line-height: 1.6;
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 480px) {
+            .container {
+                padding: 40px 24px;
+                border-radius: 0;
+                box-shadow: none;
+            }
+
+            body {
+                background: white;
+                padding: 0;
+            }
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <div class="content">
-            <h1>InstaFlow 자동화 프로그램 공유</h1>
+        <h1>InstaFlow 자동화 프로그램 공유</h1>
 
+        <div class="intro-text">
             <p>안녕하세요. 인스타그램을 진행하면서 반복적인 댓글 및 답방 업무에 소요되는 시간이 많아, 이를 효율적으로 개선하고자 직접 프로그램을 개발하였습니다.</p>
-
             <p>주변 분들께서도 사용을 원하시는 분들이 많아, 개별적으로 파일을 전달해 드리는 대신 이 페이지를 통해 공유해 드리고자 합니다.</p>
-
             <p>필요하신 분들은 아래 버튼을 통해 프로그램을 다운로드하여 자유롭게 사용하시기 바랍니다.</p>
+        </div>
 
-            <div class="download-box">
-                <h3 style="margin-bottom: 10px; color:#333;">💾 InstaFlow (무료 버전)</h3>
-                <p style="margin-bottom: 20px; font-size: 0.9rem; color:#666;">Windows 전용 / 무설치 실행</p>
-
-                <!-- 아래 링크는 실제 파일 링크로 교체 필요 -->
-                <a href="#" class="btn" onclick="alert('파일 준비 중입니다.'); return false;">다운로드 (v1.0.2)</a>
-
-                <p class="note">
-                    * Windows Defender 경고 발생 시 '추가 정보' -> '실행'을 클릭해 주세요.<br>
-                    (개인 개발 프로그램 특성상 발생하는 단순 경고입니다.)
-                </p>
+        <div class="download-box">
+            <div class="download-title">
+                💾 InstaFlow <span class="badge-free">무료 버전</span>
             </div>
+            <p class="download-subtitle">Windows 전용 / 무설치 실행</p>
 
-            <!-- 사용법 안내 삭제 (유튜브 업로드 예정) -->
+            <!-- 실제 다운로드 링크 -->
+            <a href="https://github.com/kyjneo-tech/instauto-web/releases/download/v1.0.2/InstaFlow.exe"
+                class="btn-download">다운로드 (v1.0.2)</a>
+
+            <div class="note-text">
+                * <b>Windows Defender 경고 발생 시</b><br>
+                '추가 정보' -&gt; '실행'을 클릭해 주세요.<br>
+                (개인 개발 프로그램 특성상 발생하는 단순 경고입니다.)
+            </div>
         </div>
 
         <div class="footer-note">
