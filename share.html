@@ -195,10 +195,72 @@
             <a href="https://github.com/kyjneo-tech/InstaFlowWeb/releases/download/v1.0.4/InstaFlow.zip"
                 class="btn-download">다운로드</a>
 
-            <div class="note-text">
-                * <b>Windows Defender 경고 발생 시</b><br>
-                '추가 정보' -&gt; '실행'을 클릭해 주세요.<br>
-                (개인 개발 프로그램 특성상 발생하는 단순 경고입니다.)
+            <!-- Windows Defender 경고 안내 박스 -->
+            <style>
+                .security-guide {
+                    background-color: #fff5f5;
+                    border: 2px solid #ffc9c9;
+                    border-radius: 12px;
+                    padding: 20px;
+                    margin-top: 30px;
+                    text-align: left;
+                    animation: fadeIn 0.5s ease-in;
+                }
+
+                .security-title {
+                    color: #fa5252;
+                    font-weight: 700;
+                    margin-bottom: 12px;
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    font-size: 1.05rem;
+                }
+
+                .security-desc {
+                    font-size: 0.95rem;
+                    color: #495057;
+                    margin-bottom: 15px;
+                    line-height: 1.5;
+                }
+
+                .action-step {
+                    background: white;
+                    padding: 10px 15px;
+                    border-radius: 8px;
+                    border: 1px solid #ffec99;
+                    font-size: 0.95rem;
+                    color: #333;
+                    font-weight: 600;
+                    margin-bottom: 8px;
+                }
+
+                .highlight {
+                    color: #228be6;
+                    background: #e7f5ff;
+                    padding: 2px 6px;
+                    border-radius: 4px;
+                }
+            </style>
+
+            <div class="security-guide">
+                <div class="security-title">
+                    🚨 잠깐! "Windows의 PC 보호" 창이 떴나요?
+                </div>
+                <div class="security-desc">
+                    바이러스가 아닙니다! 😅<br>
+                    개인 개발자가 만든 프로그램이라 윈도우가 "처음 보는 파일인데?" 하며 알려주는 과정입니다.
+                </div>
+
+                <div class="action-step">
+                    👉 1단계: 팝업창의 <span class="highlight">추가 정보</span> 글씨 클릭
+                </div>
+                <div class="action-step">
+                    👉 2단계: 하단에 생기는 <span class="highlight">실행</span> 버튼 클릭
+                </div>
+                <div style="text-align: center; margin-top: 10px; font-size: 0.85rem; color: #868e96;">
+                    (안심하고 실행하셔도 됩니다!)
+                </div>
             </div>
         </div>
 
