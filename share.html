@@ -7,274 +7,166 @@
     <title>InstaFlow - 무료 배포</title>
     <meta name="robots" content="noindex, nofollow">
 
-    <!-- Open Graph (SNS 공유 시 미리보기) -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://kyjneo-tech.github.io/InstaFlowWeb/share.html">
-    <meta property="og:title" content="InstaFlow - 인스타그램 자동 관리">
-    <meta property="og:description" content="반복적인 댓글/답방 업무에 지치셨나요? 사람처럼 행동하는 안전한 자동화 프로그램을 무료로 체험해보세요.">
+    <meta property="og:title" content="InstaFlow - Dev-Grade Automation">
+    <meta property="og:description" content="Click to deploy your own AI Instagram Assistant. Free access available.">
     <meta property="og:image" content="https://img.youtube.com/vi/aYOI0EPgAmo/maxresdefault.jpg">
-    <meta property="og:site_name" content="InstaFlow">
-    <!-- Pretendard Font -->
-    <link rel="stylesheet" as="style" crossorigin
-        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+
     <style>
+        :root {
+            --bg-color: #050505;
+            --card-bg: #1e1e24;
+            --accent-primary: #00f3ff;
+            --accent-success: #0aff0a;
+            --text-main: #ffffff;
+            --text-muted: #8892b0;
+        }
+
         body {
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
-            line-height: 1.75;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
             padding: 20px;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            margin: 0;
+        }
+
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -2;
+            pointer-events: none;
         }
 
         .container {
             width: 100%;
-            max-width: 540px;
-            background: white;
-            padding: 60px 40px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
-            text-align: left;
+            max-width: 600px;
+            background: rgba(30, 30, 36, 0.8);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.6);
+            text-align: center;
         }
 
         h1 {
-            font-size: 1.7rem;
-            margin-bottom: 40px;
-            color: #111;
-            font-weight: 700;
-            text-align: center;
-            letter-spacing: -0.5px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            background: linear-gradient(90deg, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .intro-text p {
-            margin-bottom: 24px;
-            color: #444;
-            font-size: 1.05rem;
-            word-break: keep-all;
-        }
-
-        .intro-text p:last-child {
-            margin-bottom: 40px;
-        }
-
-        .download-box {
-            background: #f8f9fa;
-            padding: 35px;
-            border-radius: 16px;
-            text-align: center;
-            border: 1px solid #e9ecef;
-            margin-top: 20px;
-        }
-
-        .download-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #2c3e50;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .badge-free {
-            background-color: #5c7cfa;
-            color: white;
-            font-size: 0.75rem;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-weight: 600;
-            vertical-align: middle;
-        }
-
-        .download-subtitle {
-            font-size: 0.9rem;
-            color: #868e96;
-            margin-bottom: 25px;
-        }
-
-        .btn-download {
-            display: inline-block;
-            background-color: #228be6;
-            color: white;
-            padding: 18px 45px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.15rem;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(34, 139, 230, 0.3);
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .btn-download:hover {
-            background-color: #1c7ed6;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(34, 139, 230, 0.4);
-        }
-
-        .note-text {
-            font-size: 0.85rem;
-            color: #868e96;
-            margin-top: 20px;
-            line-height: 1.5;
-            background: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px dashed #dee2e6;
-            text-align: left;
-        }
-
-        .footer-note {
-            text-align: center;
-            color: #adb5bd;
-            font-size: 0.85rem;
-            margin-top: 50px;
-            border-top: 1px solid #f1f3f5;
-            padding-top: 30px;
-            line-height: 1.6;
-        }
-
-        .video-container {
+        .video-box {
             position: relative;
             padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
-            max-width: 100%;
-            background: #000;
-            border-radius: 12px;
-            margin: 40px 0;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .video-container iframe {
+        .video-box iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            border: 0;
         }
 
-        /* Mobile adjustments */
-        @media (max-width: 480px) {
-            .container {
-                padding: 40px 24px;
-                border-radius: 0;
-                box-shadow: none;
-            }
+        .download-btn {
+            display: block;
+            width: 100%;
+            background: var(--accent-primary);
+            color: #000;
+            padding: 18px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 20px;
+        }
 
-            body {
-                background: white;
-                padding: 0;
-            }
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.4);
+        }
+
+        .footer-note {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+        }
+
+        .defender-mini {
+            background: rgba(255, 95, 86, 0.1);
+            border: 1px solid rgba(255, 95, 86, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: left;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #ffcccc;
         }
     </style>
 </head>
 
 <body>
+    <div class="bg-grid"></div>
+
     <div class="container">
-        <h1>InstaFlow 자동화 프로그램 공유</h1>
+        <h1>InstaFlow Distributor</h1>
 
-        <div class="intro-text">
-            <p>안녕하세요. 인스타그램을 진행하면서 반복적인 댓글 및 답방 업무에 소요되는 시간이 많아, 이를 효율적으로 개선하고자 직접 프로그램을 개발하였습니다.</p>
+        <p style="color: var(--text-muted); margin-bottom: 30px; line-height: 1.6;">
+            반복적인 인스타그램 업무를 자동화하세요.<br>
+            개발자가 직접 설계한 안전한 알고리즘이 탑재되어 있습니다.
+        </p>
 
-            <p>필요하신 분들은 아래 버튼을 통해 프로그램을 다운로드하여 자유롭게 사용하시기 바랍니다.</p>
-        </div>
-
-        <div class="video-container">
-            <iframe src="https://www.youtube.com/embed/aYOI0EPgAmo" title="InstaFlow 사용 방법"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        <div class="video-box">
+            <iframe src="https://www.youtube.com/embed/aYOI0EPgAmo" title="InstaFlow Usage" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen></iframe>
         </div>
 
-        <div class="download-box">
-            <div class="download-title">
-                💾 InstaFlow
-            </div>
-            <p class="download-subtitle">Windows 전용 / 무설치 실행</p>
+        <a href="https://github.com/kyjneo-tech/InstaFlowWeb/releases/download/v1.0.4/InstaFlow.zip"
+            class="download-btn">
+            Download Application
+        </a>
 
-            <!-- 실제 다운로드 링크 -->
-            <a href="https://github.com/kyjneo-tech/InstaFlowWeb/releases/download/v1.0.4/InstaFlow.zip"
-                class="btn-download">다운로드</a>
-
-            <!-- Windows Defender 경고 안내 박스 -->
-            <style>
-                .security-guide {
-                    background-color: #fff5f5;
-                    border: 2px solid #ffc9c9;
-                    border-radius: 12px;
-                    padding: 20px;
-                    margin-top: 30px;
-                    text-align: left;
-                    animation: fadeIn 0.5s ease-in;
-                }
-
-                .security-title {
-                    color: #fa5252;
-                    font-weight: 700;
-                    margin-bottom: 12px;
-                    display: flex;
-                    align-items: center;
-                    gap: 8px;
-                    font-size: 1.05rem;
-                }
-
-                .security-desc {
-                    font-size: 0.95rem;
-                    color: #495057;
-                    margin-bottom: 15px;
-                    line-height: 1.5;
-                }
-
-                .action-step {
-                    background: white;
-                    padding: 10px 15px;
-                    border-radius: 8px;
-                    border: 1px solid #ffec99;
-                    font-size: 0.95rem;
-                    color: #333;
-                    font-weight: 600;
-                    margin-bottom: 8px;
-                }
-
-                .highlight {
-                    color: #228be6;
-                    background: #e7f5ff;
-                    padding: 2px 6px;
-                    border-radius: 4px;
-                }
-            </style>
-
-            <div class="security-guide">
-                <div class="security-title">
-                    🚨 잠깐! "Windows의 PC 보호" 창이 떴나요?
-                </div>
-                <div class="security-desc">
-                    바이러스가 아닙니다! 😅<br>
-                    개인 개발자가 만든 프로그램이라 윈도우가 "처음 보는 파일인데?" 하며 알려주는 과정입니다.
-                </div>
-
-                <div class="action-step">
-                    👉 1단계: 팝업창의 <span class="highlight">추가 정보</span> 글씨 클릭
-                </div>
-                <div class="action-step">
-                    👉 2단계: 하단에 생기는 <span class="highlight">실행</span> 버튼 클릭
-                </div>
-                <div style="text-align: center; margin-top: 10px; font-size: 0.85rem; color: #868e96;">
-                    (안심하고 실행하셔도 됩니다!)
-                </div>
-            </div>
+        <div class="defender-mini">
+            <strong>⚠️ Windows Protection Alert?</strong><br>
+            Click 'More Info' → 'Run Anyway'.<br>
+            (False positive due to unsigned certificate)
         </div>
 
         <div class="footer-note">
-            프로그램 관련 문의는 카카오톡으로 남겨주시면<br>
-            확인하는 대로 답변 드리겠습니다.
+            운영 관련 문의: 카카오톡 채널<br>
+            &copy; 2026 InstaFlow Team
         </div>
     </div>
 </body>

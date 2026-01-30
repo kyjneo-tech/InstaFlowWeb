@@ -4,12 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InstaFlow (Beta) - AI 인스타그램 소통 어시스턴트</title>
+    <title>InstaFlow - AI 인스타그램 소통 어시스턴트</title>
     <meta name="robots" content="noindex, nofollow">
     <meta name="description" content="AI가 소통을 도와주는 개인 비서. 자연스러운 댓글 생성, 안전한 도우미.">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap"
+    <!-- Google Fonts: JetBrains Mono (Code), Inter (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"
         rel="stylesheet">
+
     <style>
+        :root {
+            --bg-color: #050505;
+            --card-bg: rgba(20, 20, 25, 0.6);
+            --accent-primary: #00f3ff;
+            /* Cyan */
+            --accent-secondary: #bc13fe;
+            /* Neon Purple */
+            --accent-success: #0aff0a;
+            /* Terminal Green */
+            --text-main: #ffffff;
+            --text-muted: #8892b0;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -17,273 +36,644 @@
         }
 
         body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: #333;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
         }
 
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* --- Background Animation --- */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .glow-spot {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 243, 255, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            animation: floatGlow 10s infinite alternate;
+        }
+
+        .glow-spot.secondary {
+            background: radial-gradient(circle, rgba(188, 19, 254, 0.15) 0%, transparent 70%);
+            right: -100px;
+            bottom: -100px;
+            animation-delay: -5s;
+        }
+
+        @keyframes floatGlow {
+            0% {
+                transform: translate(0, 0);
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: translate(50px, 50px);
+                opacity: 0.8;
+            }
+        }
+
+        /* --- Layout & Utilities --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .code-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* --- Header / Nav --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(5, 5, 5, 0.9);
+            padding: 15px 0;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            color: var(--accent-secondary);
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+        }
+
+        /* --- Hero Section --- */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 40px 20px;
-        }
-
-        .container {
-            max-width: 1000px;
-            width: 100%;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 24px;
-            padding: 60px;
-            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-        }
-
-        .logo {
-            font-size: 3rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 10px;
-        }
-
-        .tagline {
-            font-size: 1.3rem;
-            color: #666;
-            margin-bottom: 40px;
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-bottom: 50px;
-        }
-
-        .feature {
-            padding: 25px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
-            border-radius: 16px;
-            transition: transform 0.3s ease;
-        }
-
-        .feature:hover {
-            transform: translateY(-5px);
-        }
-
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-
-        .feature h3 {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .feature p {
-            color: #666;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .pricing {
             text-align: center;
-            padding: 40px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 16px;
-            color: white;
-            margin-bottom: 40px;
+            padding-top: 80px;
         }
 
-        .pricing h2 {
-            font-size: 1.5rem;
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
             margin-bottom: 20px;
+            letter-spacing: -0.03em;
         }
 
-        .price {
-            font-size: 3.5rem;
-            font-weight: 900;
-        }
-
-        .price span {
+        .hero-subtitle {
             font-size: 1.2rem;
-            font-weight: 400;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .trial-badge {
+        .status-badge {
             display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 8px 20px;
-            border-radius: 50px;
-            margin-top: 15px;
-            font-size: 0.95rem;
+            padding: 6px 16px;
+            background: rgba(0, 243, 255, 0.1);
+            color: var(--accent-primary);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            border-radius: 100px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            margin-bottom: 30px;
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
         }
 
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .cta-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 60px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             color: white;
-            padding: 18px 50px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
+            padding: 16px 40px;
             font-size: 1.1rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            color: #888;
-            font-size: 0.9rem;
-        }
-
-        .footer a {
-            color: #667eea;
-            text-decoration: none;
-        }
-
-        .policy-section {
-            margin-top: 50px;
-            padding-top: 30px;
-            border-top: 1px solid #eee;
-        }
-
-        .video-container {
+            font-weight: 700;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
             position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
             overflow: hidden;
-            max-width: 100%;
-            background: #000;
-            border-radius: 20px;
-            margin: 40px 0;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .video-container iframe {
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(188, 19, 254, 0.4);
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        /* --- Scroll Down Indicator --- */
+        .scroll-down {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        /* --- Features (Grid) --- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            border-radius: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .feature-card::after {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at var(--mouse-x, center) var(--mouse-y, center), rgba(255, 255, 255, 0.05), transparent 40%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
         }
 
-        .policy-section h3 {
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-            color: #333;
+        .feature-card:hover::after {
+            opacity: 1;
         }
 
-        .policy-section p {
-            color: #666;
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 16px;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .card-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* --- Terminal / Download Section --- */
+        .terminal-window {
+            background: #1e1e24;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            border: 1px solid #333;
+            max-width: 800px;
+            margin: 60px auto;
+            overflow: hidden;
+            font-family: 'JetBrains Mono', monospace;
+            text-align: left;
+        }
+
+        .terminal-header {
+            background: #2d2d35;
+            padding: 10px 15px;
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid #333;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .red {
+            background: #ff5f56;
+        }
+
+        .yellow {
+            background: #ffbd2e;
+        }
+
+        .green {
+            background: #27c93f;
+        }
+
+        .terminal-body {
+            padding: 30px;
+            color: #a9b7c6;
             font-size: 0.9rem;
-            line-height: 1.8;
-            margin-bottom: 15px;
         }
 
+        .cmd-line {
+            margin-bottom: 15px;
+            display: flex;
+        }
+
+        .prompt {
+            color: var(--accent-success);
+            margin-right: 10px;
+        }
+
+        .cmd {
+            color: #fff;
+        }
+
+        .defender-guide {
+            margin-top: 20px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.2);
+            padding-top: 20px;
+        }
+
+        .warning-text {
+            color: #ffbd2e;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        /* --- Stats / Pricing --- */
+        .stats-section {
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        /* --- Footer --- */
+        footer {
+            padding: 60px 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .footer-links a {
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        /* --- Mobile --- */
         @media (max-width: 768px) {
-            .card {
-                padding: 40px 25px;
-            }
-
-            .logo {
-                font-size: 2.2rem;
-            }
-
-            .price {
+            .hero-title {
                 font-size: 2.5rem;
+            }
+
+            .section {
+                padding: 60px 0;
             }
         }
     </style>
 </head>
 
 <body>
+
+    <div class="bg-grid"></div>
+    <div class="glow-spot"></div>
+    <div class="glow-spot secondary"></div>
+
+    <header id="navbar">
+        <div class="container nav-content">
+            <div class="logo">
+                <span class="logo-icon">⚡</span>
+                <span class="code-font">InstaFlow</span>
+            </div>
+            <a href="https://open.kakao.com/o/sVh8KUci" target="_blank" class="nav-btn">문의하기</a>
+        </div>
+    </header>
+
     <section class="hero">
         <div class="container">
-            <div class="card">
-                <h1 class="logo">📸 InstaFlow <span style="font-size:1.5rem; color:#ffeb3b;">(Beta)</span></h1>
-                <p class="tagline">아직도 손으로 댓글 다시나요? (AI가 3초 만에 써드립니다)</p>
+            <div class="status-badge">
+                <span style="margin-right:8px">●</span>SYSTEM ONLINE v1.0.4
+            </div>
 
-                <div class="features">
-                    <div class="feature">
-                        <div class="feature-icon">🤖</div>
-                        <h3>AI 댓글 자동 생성</h3>
-                        <p>AI가 게시물 내용을 분석하고, 상황에 맞는 자연스러운 댓글을 작성합니다.</p>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">⚡</div>
-                        <h3>대량 작업, 손쉽게</h3>
-                        <p>한 번에 여러 게시물에 댓글을 달 수 있어요. 수동 작업 시간을 대폭 줄여드립니다.</p>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">🛡️</div>
-                        <h3>안전한 자동화</h3>
-                        <p>사람처럼 마우스를 움직이고 대기 시간을 조절하여 자연스럽게 작동합니다.</p>
-                    </div>
+            <h1 class="hero-title">
+                Automate Your<br>
+                <span class="text-gradient" id="typing-text">Instagram</span>
+            </h1>
+
+            <p class="hero-subtitle">
+                반복적인 댓글, 답방 업무를 AI에게 맡기세요.<br>
+                개발자가 직접 만든 가장 안전하고 똑똑한 어시스턴트입니다.
+            </p>
+
+            <div class="cta-group">
+                <a href="#download" class="btn-primary">
+                    <span>무료 다운로드</span>
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="scroll-down">
+                <svg width="30" height="30" fill="none" stroke="rgba(255,255,255,0.5)" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="card-icon">🤖</div>
+                    <h3 class="card-title">AI Natural Reply</h3>
+                    <p class="card-desc">단순 매크로가 아닙니다. AI가 게시물 내용을 분석하여 사람처럼 자연스러운 댓글을 생성합니다.</p>
                 </div>
-
-                <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/8Ro0IQ3q5lE" title="InstaFlow 사용 방법"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe>
+                <div class="feature-card">
+                    <div class="card-icon">⚡</div>
+                    <h3 class="card-title">High Performance</h3>
+                    <p class="card-desc">대량의 작업도 순식간에 처리합니다. 당신의 시간을 더 가치 있는 일에 투자하세요.</p>
                 </div>
-
-                <div style="text-align: center; margin: 50px 0;">
-                    <div
-                        style="background: #f8f9fa; padding: 30px; border-radius: 16px; border: 2px dashed #ddd; display: inline-block; max-width: 500px; width: 100%;">
-                        <div style="font-size: 3rem; margin-bottom: 10px;">💾</div>
-                        <h3 style="margin-bottom: 20px; color: #333;">Windows PC 버전 다운로드</h3>
-
-                        <a href="https://github.com/kyjneo-tech/InstaFlowWeb/releases/download/v1.0.3-patch/InstaFlow_Setup_v1.0.3.zip"
-                            class="cta-button" style="width: 100%; box-sizing: border-box;">설치 파일 받기 (.zip)</a>
-
-                        <p style="margin-top: 15px; font-size: 0.85rem; color: #666; line-height: 1.5;">
-                            ✅ 바이러스 검사 완료 (안심하고 받으세요)<br>
-                            ✅ 압축 풀고 실행하시면 바로 사용 가능합니다.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="policy-section">
-                    <h3>📋 이용약관 및 환불정책</h3>
-                    <p>
-                        <strong>무료 체험:</strong> 다운로드 후 최초 실행 시 3일간 무료로 모든 기능을 테스트해보실 수 있습니다.
-                    </p>
-                    <p>
-                        <strong>서버 후원:</strong> 무료 기간 종료 후 계속 사용을 원하시면 프로그램 내에서 소정의 서버 비용만 후원해주시면 됩니다. (강제 결제 없음)
-                    </p>
-                    <p>
-                        <strong>환불 정책:</strong> 무료 체험 기간(3일) 동안 충분히 서비스를 테스트하신 후 결제가 진행되므로, 결제 후에는 환불이 불가합니다.
-                    </p>
-                    <p>
-                        <strong>문의:</strong> 서비스 관련 문의는 이메일로 연락해 주세요.
-                    </p>
-                </div>
-
-                <div class="footer">
-                    <p>© 2026 InstaFlow. All rights reserved.</p>
-                    <p><a href="https://open.kakao.com/o/sVh8KUci" target="_blank">💬 프로그램 관련 문의하기 (카카오톡)</a></p>
+                <div class="feature-card">
+                    <div class="card-icon">🛡️</div>
+                    <h3 class="card-title">Safety First</h3>
+                    <p class="card-desc">휴먼 터치 알고리즘을 적용하여 계정 안전을 최우선으로 보호합니다.</p>
                 </div>
             </div>
         </div>
     </section>
+
+    <section class="section" id="video">
+        <div class="container">
+            <div style="text-align:center; max-width:800px; margin:0 auto;">
+                <h2 style="font-size:2rem; margin-bottom:40px; font-weight:800;">Workflow Demo</h2>
+                <div
+                    style="position:relative; padding-bottom:56.25%; height:0; border-radius:24px; overflow:hidden; box-shadow:0 20px 80px rgba(0,0,0,0.5); border:1px solid rgba(255,255,255,0.1);">
+                    <iframe style="position:absolute; top:0; left:0; width:100%; height:100%;"
+                        src="https://www.youtube.com/embed/8Ro0IQ3q5lE" title="Demo Video" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="download">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 50px;">
+                <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 20px;">Ready to Deploy?</h2>
+                <p style="color: var(--text-muted);">지금 바로 설치하여 업무 자동화를 시작하세요.</p>
+            </div>
+
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                    <span style="margin-left: 10px; color: #666; font-size: 0.8rem;">administrator@instaflow:~</span>
+                </div>
+                <div class="terminal-body">
+                    <div class="cmd-line">
+                        <span class="prompt">➜</span>
+                        <span class="cmd">download_latest_version.sh</span>
+                    </div>
+                    <div style="margin-bottom: 20px; color: #fff;">
+                        [SUCCESS] Package 'InstaFlow_Setup_v1.0.3.zip' located.<br>
+                        [INFO] Virus Scan: PASSED (Clean)<br>
+                        [INFO] Size: 84MB
+                    </div>
+
+                    <a href="https://github.com/kyjneo-tech/InstaFlowWeb/releases/download/v1.0.3-patch/InstaFlow_Setup_v1.0.3.zip"
+                        style="display: inline-block; background: var(--accent-success); color: #000; padding: 10px 20px; font-weight: bold; border-radius: 4px; margin-bottom: 30px;">
+                        ⬇ DOWNLOAD NOW
+                    </a>
+
+                    <div class="defender-guide">
+                        <div class="warning-text">⚠️ SECURITY ALERT: Windows Defender SmartScreen</div>
+                        <p style="margin-bottom: 10px;">If you see a "Windows tried to protect your PC" popup:</p>
+                        <ol style="padding-left: 20px; color: #eee;">
+                            <li style="margin-bottom: 5px;">Click <span
+                                    style="color: var(--accent-primary); text-decoration: underline;">More Info (추가
+                                    정보)</span></li>
+                            <li>Click <span style="color: var(--accent-primary); text-decoration: underline;">Run Anyway
+                                    (실행)</span></li>
+                        </ol>
+                        <p style="margin-top: 15px; color: #666; font-size: 0.8rem;">* This appears because the app is
+                            not yet signed with a global certificate. It is safe to run.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                style="text-align: center; margin-top: 60px; max-width: 600px; margin-left: auto; margin-right: auto; padding: 30px; background: rgba(255,255,255,0.03); border-radius: 16px;">
+                <h3 style="margin-bottom: 15px; font-size: 1.2rem;">License Policy</h3>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">
+                    3일간 모든 기능을 무료로 체험하실 수 있습니다.<br>
+                    무료 기간 종료 후 계속 사용을 원하시면 <span style="color: #fff; font-weight: bold;">프로그램 내에서 기간 연장</span> 후 사용하시면
+                    됩니다.<br>
+                    (강제 결제는 절대 없습니다.)
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div style="margin-bottom: 20px; font-size: 1.5rem;">📸</div>
+            <div class="footer-links">
+                <a href="#">이용약관</a>
+                <a href="#">개인정보처리방침</a>
+                <a href="https://open.kakao.com/o/sVh8KUci" target="_blank">고객센터</a>
+            </div>
+            <p style="margin-top: 30px; opacity: 0.5;">
+                &copy; 2026 InstaFlow. Developed by KYJNEO-TECH.<br>
+                All systems operational.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Typing Effect
+        const textElement = document.getElementById('typing-text');
+        const texts = ["Engagement.", "Comments.", "Marketing.", "Workflow."];
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function type() {
+            const currentText = texts[textIndex];
+
+            if (isDeleting) {
+                textElement.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                textElement.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            if (!isDeleting && charIndex === currentText.length) {
+                isDeleting = true;
+                setTimeout(type, 2000);
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % texts.length;
+                setTimeout(type, 500);
+            } else {
+                setTimeout(type, isDeleting ? 100 : 150);
+            }
+        }
+
+        // Start typing
+        setTimeout(type, 1000);
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mouse Move Effect for Cards
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+    </script>
 </body>
 
 </html>
