@@ -375,8 +375,10 @@
         .modal-box {
             background: #1a1a20;
             width: 90%;
-            max-width: 500px;
-            padding: 40px;
+            max-width: 450px;
+            /* Slightly narrower for better focus */
+            padding: 30px;
+            /* Reduced padding */
             border-radius: 20px;
             border: 1px solid var(--accent-primary);
             text-align: center;
@@ -384,6 +386,24 @@
             transition: 0.3s;
             position: relative;
             box-shadow: 0 0 50px rgba(0, 243, 255, 0.2);
+            max-height: 90vh;
+            /* Prevent overflowing screen height */
+            overflow-y: auto;
+            /* Enable scrolling if content is too tall */
+        }
+
+        /* Custom scrollbar for modal */
+        .modal-box::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-box::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        .modal-box::-webkit-scrollbar-track {
+            background: transparent;
         }
 
         .modal-overlay.active .modal-box {
@@ -608,21 +628,23 @@
 
             <!-- Friendly SmartScreen Guide -->
             <div
-                style="text-align: left; background: rgba(255, 95, 86, 0.1); padding: 20px; border-radius: 12px; margin-bottom: 25px; border: 1px solid rgba(255, 95, 86, 0.3);">
-                <h3 style="color: #ff5f56; font-size: 1.1rem; margin-bottom: 10px;">🚨 잠깐! "Windows의 PC 보호" 창이 떴나요?
+                style="text-align: left; background: rgba(255, 95, 86, 0.1); padding: 15px; border-radius: 12px; margin-bottom: 20px; border: 1px solid rgba(255, 95, 86, 0.3);">
+                <h3
+                    style="color: #ff5f56; font-size: 1rem; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                    <span>🚨</span> "PC 보호" 창이 떴나요?
                 </h3>
-                <p style="color: #ddd; font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px;">
+                <p style="color: #ddd; font-size: 0.85rem; line-height: 1.5; margin-bottom: 12px;">
                     <strong>바이러스가 아닙니다! 😅</strong><br>
-                    개인 개발자가 만든 프로그램이라 윈도우가 "처음 보는 파일인데?" 하며 알려주는 과정입니다.
+                    개인 개발자 프로그램이라 윈도우가 낯설어하는 것뿐입니다.
                 </p>
-                <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px;">
-                    <div style="margin-bottom: 8px;">👉 <strong>1단계:</strong> 팝업창의 <u
-                            style="color:white; cursor:pointer;">'추가 정보'</u> 글씨 클릭</div>
-                    <div>👉 <strong>2단계:</strong> 하단에 생기는 <u style="color:white; cursor:pointer;">'실행'</u> 버튼 클릭
+                <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; font-size: 0.85rem;">
+                    <div style="margin-bottom: 5px;">👉 <strong>1.</strong> 팝업의 <u
+                            style="color:white; cursor:pointer;">'추가 정보'</u> 클릭</div>
+                    <div>👉 <strong>2.</strong> 하단의 <u style="color:white; cursor:pointer;">'실행'</u> 버튼 클릭
                     </div>
                 </div>
                 <p
-                    style="color: var(--accent-success); font-size: 0.9rem; margin-top: 15px; font-weight: bold; text-align: center;">
+                    style="color: var(--accent-success); font-size: 0.8rem; margin-top: 10px; font-weight: bold; text-align: center;">
                     (안심하고 실행하셔도 됩니다!)
                 </p>
             </div>
