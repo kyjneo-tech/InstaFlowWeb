@@ -262,7 +262,8 @@
         }
 
         .log-info {
-            color: var(--accent-primary);
+            color: #6a7185;
+            /* Much darker/muted to let success pop */
         }
 
         @keyframes fadeInLog {
@@ -773,21 +774,22 @@
         // Pre-fill logs to make it look busy immediately from the start
         function prefillLogs() {
             const now = new Date();
-            // Generate 15 past logs
-            for (let i = 15; i > 0; i--) {
-                const pastTime = new Date(now.getTime() - i * 1500);
+            // Generate 8 past logs (reduced count as we want quality over quantity view)
+            for (let i = 8; i > 0; i--) {
+                const pastTime = new Date(now.getTime() - i * 2000);
                 const timeStr = pastTime.toLocaleTimeString('en-US', { hour12: false, hour: "2-digit", minute: "2-digit", second: "2-digit" });
 
                 const randomScenario = scenarios[Math.floor(Math.random() * scenarios.length)];
-                // Pick a random early stage action (Search, Scroll, or Analyze)
-                const actionTemplates = [actions[0], actions[1], actions[2]];
+
+                // Only use high-value logs for prefill
+                const actionTemplates = [
+                    { text: `[Analyze] Post Content: ${randomScenario.context}`, type: 'info' },
+                    { text: actions[4].text, type: 'success' }, // Like
+                    { text: `${actions[5].text} ${randomScenario.comment}`, type: 'success' } // Comment
+                ];
                 const randomAction = actionTemplates[Math.floor(Math.random() * actionTemplates.length)];
 
-                let text = randomAction.text;
-                if (text.includes('Searching')) text += randomScenario.tag;
-                if (text.includes('Content')) text += randomScenario.context;
-
-                createLog(text, 'info', timeStr, false);
+                createLog(randomAction.text, randomAction.type, timeStr, false);
             }
         }
 
@@ -798,42 +800,30 @@
         let currentScenario = scenarios[0];
 
         function runSequence() {
-            // Randomly pick a scenario if starting
+            // Simplified Sequence: Analyze -> Like -> Comment -> Sleep
+            // Removed: Scroll, Think, Search (Filler)
+
             if (step === 0) {
                 currentScenario = scenarios[Math.floor(Math.random() * scenarios.length)];
-                createLog(`${actions[0].text} ${currentScenario.tag}`, 'info');
-                step++;
-                setTimeout(runSequence, 800);
-            }
-            else if (step === 1) {
-                createLog(actions[1].text, 'info'); // Scroll
-                step++;
-                setTimeout(runSequence, 1200);
-            }
-            else if (step === 2) {
+                // Combined Search + Analyze concept into one or just start with Analyze
                 createLog(`${actions[2].text} ${currentScenario.context}`, 'info'); // Analyze
                 step++;
-                setTimeout(runSequence, 1000);
+                setTimeout(runSequence, 1200); // Fast transition to action
+            }
+            else if (step === 1) {
+                createLog(actions[4].text, 'success'); // Like (Green)
+                step++;
+                setTimeout(runSequence, 800); // Fast transition to comment
+            }
+            else if (step === 2) {
+                createLog(`${actions[5].text} ${currentScenario.comment}`, 'success'); // Comment (Green)
+                step++;
+                setTimeout(runSequence, 2000); // Let user read the comment
             }
             else if (step === 3) {
-                createLog(actions[3].text, 'info'); // Think
-                step++;
-                setTimeout(runSequence, 1500);
-            }
-            else if (step === 4) {
-                createLog(actions[4].text, 'success'); // Like
-                step++;
-                setTimeout(runSequence, 600);
-            }
-            else if (step === 5) {
-                createLog(`${actions[5].text} ${currentScenario.comment}`, 'success'); // Comment
-                step++;
-                setTimeout(runSequence, 2000);
-            }
-            else if (step === 6) {
-                createLog(actions[6].text, 'info'); // Sleep
+                createLog(actions[6].text, 'info'); // Sleep (Dimmed)
                 step = 0; // Reset
-                setTimeout(runSequence, 2500);
+                setTimeout(runSequence, 3000); // Longer wait to simulate human break
             }
         }
 
