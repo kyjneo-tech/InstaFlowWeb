@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InstaFlow - AI 인스타그램 소통 어시스턴트</title>
-    <meta name="robots" content="noindex, nofollow">
-    <meta name="description" content="AI가 소통을 도와주는 개인 비서. 자연스러운 댓글 생성, 안전한 도우미.">
-    <!-- Google Fonts: JetBrains Mono (Code), Inter (Body) -->
+    <meta name="robots" content="index, follow"> <!-- Changed to index for marketing -->
+    <meta name="description" content="단순 반복 노동은 그만. 30년차 개발자가 만든 안전한 인스타그램 자동화. 가상 인터페이스로 댓글, 좋아요, 답방을 완벽하게 처리합니다.">
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -17,13 +17,11 @@
     <style>
         :root {
             --bg-color: #050505;
-            --card-bg: rgba(20, 20, 25, 0.6);
+            --card-bg: rgba(20, 20, 25, 0.8);
             --accent-primary: #00f3ff;
-            /* Cyan */
             --accent-secondary: #bc13fe;
-            /* Neon Purple */
             --accent-success: #0aff0a;
-            /* Terminal Green */
+            --accent-danger: #ff5f56;
             --text-main: #ffffff;
             --text-muted: #8892b0;
             --border-color: rgba(255, 255, 255, 0.1);
@@ -71,7 +69,7 @@
             position: fixed;
             width: 600px;
             height: 600px;
-            background: radial-gradient(circle, rgba(0, 243, 255, 0.15) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(0, 243, 255, 0.1) 0%, transparent 70%);
             border-radius: 50%;
             filter: blur(80px);
             z-index: -1;
@@ -79,7 +77,7 @@
         }
 
         .glow-spot.secondary {
-            background: radial-gradient(circle, rgba(188, 19, 254, 0.15) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(188, 19, 254, 0.1) 0%, transparent 70%);
             right: -100px;
             bottom: -100px;
             animation-delay: -5s;
@@ -88,16 +86,16 @@
         @keyframes floatGlow {
             0% {
                 transform: translate(0, 0);
-                opacity: 0.5;
+                opacity: 0.4;
             }
 
             100% {
                 transform: translate(50px, 50px);
-                opacity: 0.8;
+                opacity: 0.7;
             }
         }
 
-        /* --- Layout & Utilities --- */
+        /* --- Components --- */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -120,7 +118,30 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
-        /* --- Header / Nav --- */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            padding: 16px 40px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 20px rgba(188, 19, 254, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(188, 19, 254, 0.5);
+        }
+
+        /* --- Header --- */
         header {
             position: fixed;
             top: 0;
@@ -129,12 +150,6 @@
             z-index: 100;
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
-        }
-
-        header.scrolled {
-            background: rgba(5, 5, 5, 0.9);
-            padding: 15px 0;
         }
 
         .nav-content {
@@ -146,230 +161,65 @@
         .logo {
             font-size: 1.5rem;
             font-weight: 800;
-            letter-spacing: -0.05em;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .logo-icon {
-            color: var(--accent-secondary);
-        }
-
-        .nav-btn {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: 0.3s;
-            border: 1px solid transparent;
-        }
-
-        .nav-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
-        }
-
-        /* --- Hero Section --- */
+        /* --- HERO SPLIT SECTION --- */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: center;
-            text-align: center;
             padding-top: 80px;
+            position: relative;
         }
 
-        .hero-title {
-            font-size: 4rem;
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .hero-left h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 25px;
             font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            letter-spacing: -0.03em;
         }
 
-        .hero-subtitle {
-            font-size: 1.2rem;
+        .hero-left p {
+            font-size: 1.15rem;
             color: var(--text-muted);
             margin-bottom: 40px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            max-width: 90%;
         }
 
-        .status-badge {
-            display: inline-block;
-            padding: 6px 16px;
-            background: rgba(0, 243, 255, 0.1);
-            color: var(--accent-primary);
-            border: 1px solid rgba(0, 243, 255, 0.3);
-            border-radius: 100px;
+        /* Virtual Interface Animation */
+        .virtual-interface {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 16px;
+            padding: 20px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.85rem;
-            margin-bottom: 30px;
-            box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
-        }
-
-        .cta-group {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-bottom: 60px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            color: white;
-            padding: 16px 40px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            border-radius: 12px;
-            border: none;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            position: relative;
-            overflow: hidden;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: 0.5s;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(188, 19, 254, 0.4);
-        }
-
-        .btn-primary:hover::before {
-            left: 100%;
-        }
-
-        /* --- Scroll Down Indicator --- */
-        .scroll-down {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: bounce 2s infinite;
-            opacity: 0.5;
-        }
-
-        @keyframes bounce {
-
-            0%,
-            20%,
-            50%,
-            80%,
-            100% {
-                transform: translateX(-50%) translateY(0);
-            }
-
-            40% {
-                transform: translateX(-50%) translateY(-10px);
-            }
-
-            60% {
-                transform: translateX(-50%) translateY(-5px);
-            }
-        }
-
-        /* --- Features (Grid) --- */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .feature-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 40px;
-            border-radius: 24px;
-            transition: all 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
             position: relative;
             overflow: hidden;
         }
 
-        .feature-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--accent-primary);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-        }
-
-        .feature-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at var(--mouse-x, center) var(--mouse-y, center), rgba(255, 255, 255, 0.05), transparent 40%);
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-        }
-
-        .feature-card:hover::after {
-            opacity: 1;
-        }
-
-        .card-icon {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 15px;
-            border-radius: 16px;
-        }
-
-        .card-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: #fff;
-        }
-
-        .card-desc {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        /* --- Terminal / Download Section --- */
-        .terminal-window {
-            background: #1e1e24;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-            border: 1px solid #333;
-            max-width: 800px;
-            margin: 60px auto;
-            overflow: hidden;
-            font-family: 'JetBrains Mono', monospace;
-            text-align: left;
-        }
-
-        .terminal-header {
-            background: #2d2d35;
-            padding: 10px 15px;
+        .vi-header {
             display: flex;
             gap: 8px;
+            margin-bottom: 15px;
             border-bottom: 1px solid #333;
+            padding-bottom: 15px;
         }
 
         .dot {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
         }
 
@@ -385,73 +235,198 @@
             background: #27c93f;
         }
 
-        .terminal-body {
-            padding: 30px;
-            color: #a9b7c6;
-            font-size: 0.9rem;
+        .vi-content {
+            height: 300px;
+            overflow: hidden;
+            position: relative;
         }
 
-        .cmd-line {
-            margin-bottom: 15px;
-            display: flex;
+        .log-entry {
+            margin-bottom: 8px;
+            opacity: 0;
+            animation: fadeInLog 0.5s forwards;
         }
 
-        .prompt {
-            color: var(--accent-success);
+        .log-time {
+            color: var(--accent-secondary);
             margin-right: 10px;
         }
 
-        .cmd {
-            color: #fff;
+        .log-success {
+            color: var(--accent-success);
         }
 
-        .defender-guide {
-            margin-top: 20px;
-            border-top: 1px dashed rgba(255, 255, 255, 0.2);
-            padding-top: 20px;
+        .log-info {
+            color: var(--accent-primary);
         }
 
-        .warning-text {
-            color: #ffbd2e;
-            margin-bottom: 10px;
-            font-weight: bold;
+        @keyframes fadeInLog {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        /* --- Stats / Pricing --- */
-        .stats-section {
-            background: rgba(255, 255, 255, 0.02);
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-            padding: 60px 0;
+        /* --- Video Section --- */
+        .video-box-wrap {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 56.25%;
+            height: 0;
+        }
+
+        .video-box-wrap iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* --- Comparison Section --- */
+        .comparison-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            margin-top: 40px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 20px;
             text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-table th {
+            background: rgba(255, 255, 255, 0.05);
+            font-size: 1.1rem;
+        }
+
+        .comparison-table td {
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+
+        .col-bad {
+            color: var(--accent-danger);
+            font-weight: bold;
+            background: rgba(255, 95, 86, 0.05);
+        }
+
+        .col-good {
+            color: var(--accent-success);
+            font-weight: bold;
+            background: rgba(10, 255, 10, 0.05);
+        }
+
+        .vs-badge {
+            display: inline-block;
+            background: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            margin: 0 auto;
+        }
+
+        /* --- Modal --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
+            background: #1a1a20;
+            width: 90%;
+            max-width: 500px;
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--accent-primary);
+            text-align: center;
+            transform: scale(0.9);
+            transition: 0.3s;
+            position: relative;
+            box-shadow: 0 0 50px rgba(0, 243, 255, 0.2);
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .modal-close:hover {
+            color: #fff;
         }
 
         /* --- Footer --- */
         footer {
             padding: 60px 0;
             border-top: 1px solid var(--border-color);
+            text-align: center;
             color: var(--text-muted);
             font-size: 0.9rem;
-            text-align: center;
         }
 
-        .footer-links a {
-            margin: 0 15px;
-            transition: color 0.3s;
-        }
+        /* Mobile */
+        @media (max-width: 900px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 60px;
+            }
 
-        .footer-links a:hover {
-            color: var(--accent-primary);
-        }
-
-        /* --- Mobile --- */
-        @media (max-width: 768px) {
-            .hero-title {
+            .hero-left h1 {
                 font-size: 2.5rem;
             }
 
-            .section {
-                padding: 60px 0;
+            .hero-left p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .virtual-interface {
+                max-width: 500px;
+                margin: 0 auto;
             }
         }
     </style>
@@ -463,215 +438,215 @@
     <div class="glow-spot"></div>
     <div class="glow-spot secondary"></div>
 
-    <header id="navbar">
+    <header>
         <div class="container nav-content">
             <div class="logo">
-                <span class="logo-icon">⚡</span>
+                <span style="color:var(--accent-primary)">⚡</span>
                 <span class="code-font">InstaFlow</span>
             </div>
-            <a href="https://open.kakao.com/o/sVh8KUci" target="_blank" class="nav-btn">문의하기</a>
+            <a href="https://open.kakao.com/o/sVh8KUci" target="_blank" class="code-font"
+                style="font-size:0.9rem; color:var(--text-muted)">고객 지원</a>
         </div>
     </header>
 
+    <!-- 1. HERO SECTION -->
     <section class="hero">
-        <div class="container">
-            <div class="status-badge">
-                <span style="margin-right:8px">●</span>SYSTEM ONLINE v1.0.4
+        <div class="container hero-grid">
+            <!-- Left: Copy -->
+            <div class="hero-left">
+                <h1>영혼 없는 하트와 댓글,<br>
+                    <span class="text-gradient">언제까지 직접 누르실 건가요?</span>
+                </h1>
+                <p>
+                    단순 반복 노동은 AI에게 맡기고, 당신은 더 창조적인 일에 집중하세요.<br>
+                    개발자가 직접 만든 가장 안전하고 똑똑한 자동화입니다.
+                </p>
+                <button class="btn-primary" onclick="openModal()">
+                    <span>지겨운 노동에서 해방되기 (다운로드)</span>
+                </button>
             </div>
 
-            <h1 class="hero-title">
-                Automate Your<br>
-                <span class="text-gradient" id="typing-text">Instagram</span>
-            </h1>
-
-            <p class="hero-subtitle">
-                반복적인 댓글, 답방 업무를 AI에게 맡기세요.<br>
-                개발자가 직접 만든 가장 안전하고 똑똑한 어시스턴트입니다.
-            </p>
-
-            <div class="cta-group">
-                <a href="#download" class="btn-primary">
-                    <span>무료 다운로드</span>
-                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                    </svg>
-                </a>
-            </div>
-
-            <div class="scroll-down">
-                <svg width="30" height="30" fill="none" stroke="rgba(255,255,255,0.5)" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                </svg>
-            </div>
-        </div>
-    </section>
-
-    <section class="section">
-        <div class="container">
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="card-icon">🤖</div>
-                    <h3 class="card-title">AI 자연어 답글</h3>
-                    <p class="card-desc">단순 매크로가 아닙니다. AI가 게시물 내용을 분석하여 사람처럼 자연스러운 댓글을 생성합니다.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="card-icon">⚡</div>
-                    <h3 class="card-title">고성능 퍼포먼스</h3>
-                    <p class="card-desc">대량의 작업도 순식간에 처리합니다. 당신의 시간을 더 가치 있는 일에 투자하세요.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="card-icon">🛡️</div>
-                    <h3 class="card-title">계정 안전 최우선</h3>
-                    <p class="card-desc">휴먼 터치 알고리즘을 적용하여 계정 안전을 최우선으로 보호합니다.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section" id="video">
-        <div class="container">
-            <div style="text-align:center; max-width:800px; margin:0 auto;">
-                <h2 style="font-size:2rem; margin-bottom:40px; font-weight:800;">작동 시연 (Workflow)</h2>
-                <div
-                    style="position:relative; padding-bottom:56.25%; height:0; border-radius:24px; overflow:hidden; box-shadow:0 20px 80px rgba(0,0,0,0.5); border:1px solid rgba(255,255,255,0.1);">
-                    <iframe style="position:absolute; top:0; left:0; width:100%; height:100%;"
-                        src="https://www.youtube.com/embed/8Ro0IQ3q5lE" title="Demo Video" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen></iframe>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section" id="download">
-        <div class="container">
-            <div style="text-align: center; margin-bottom: 50px;">
-                <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 20px;">설치할 준비가 되셨나요?</h2>
-                <p style="color: var(--text-muted);">지금 바로 설치하여 업무 자동화를 시작하세요.</p>
-            </div>
-
-            <div class="terminal-window">
-                <div class="terminal-header">
+            <!-- Right: Virtual Interface Animation -->
+            <div class="virtual-interface">
+                <div class="vi-header">
                     <div class="dot red"></div>
                     <div class="dot yellow"></div>
                     <div class="dot green"></div>
-                    <span style="margin-left: 10px; color: #666; font-size: 0.8rem;">administrator@instaflow:~</span>
+                    <span style="color: #666; margin-left: auto;">running_task.py</span>
                 </div>
-                <div class="terminal-body">
-                    <div class="cmd-line">
-                        <span class="prompt">➜</span>
-                        <span class="cmd">download_latest_version.sh</span>
-                    </div>
-                    <div style="margin-bottom: 20px; color: #fff;">
-                        [SUCCESS] Package 'InstaFlow_Setup_v1.0.3.zip' located.<br>
-                        [INFO] Virus Scan: PASSED (Clean)<br>
-                        [INFO] Size: 84MB
-                    </div>
-
-                    <a href="https://github.com/kyjneo-tech/InstaFlowWeb/releases/download/v1.0.3-patch/InstaFlow_Setup_v1.0.3.zip"
-                        style="display: inline-block; background: var(--accent-success); color: #000; padding: 10px 20px; font-weight: bold; border-radius: 4px; margin-bottom: 30px;">
-                        ⬇ 다운로드 시작 (Download)
-                    </a>
-
-                    <div class="defender-guide">
-                        <div class="warning-text">⚠️ 보안 알림: Windows Defender SmartScreen</div>
-                        <p style="margin-bottom: 10px;">"Windows의 PC 보호" 팝업이 뜰 경우:</p>
-                        <ol style="padding-left: 20px; color: #eee;">
-                            <li style="margin-bottom: 5px;"><span
-                                    style="color: var(--accent-primary); text-decoration: underline;">추가 정보</span> 클릭
-                            </li>
-                            <li><span style="color: var(--accent-primary); text-decoration: underline;">실행</span> 버튼 클릭
-                            </li>
-                        </ol>
-                        <p style="margin-top: 15px; color: #666; font-size: 0.8rem;">* 개인 개발자 서명 인증서 문제로 발생하는 단순 경고입니다.
-                            안심하셔도 됩니다.</p>
-                    </div>
+                <div class="vi-content" id="log-container">
+                    <!-- Logs will be injected by JS -->
                 </div>
-            </div>
-
-            <div
-                style="text-align: center; margin-top: 60px; max-width: 600px; margin-left: auto; margin-right: auto; padding: 30px; background: rgba(255,255,255,0.03); border-radius: 16px;">
-                <h3 style="margin-bottom: 15px; font-size: 1.2rem;">라이선스 정책 (License Policy)</h3>
-                <p style="color: var(--text-muted); font-size: 0.95rem;">
-                    3일간 모든 기능을 무료로 체험하실 수 있습니다.<br>
-                    무료 기간 종료 후 계속 사용을 원하시면 <span style="color: #fff; font-weight: bold;">프로그램 내에서 기간 연장</span> 후 사용하시면
-                    됩니다.<br>
-                    (강제 결제는 절대 없습니다.)
-                </p>
             </div>
         </div>
     </section>
 
-    <footer>
+    <!-- 2. VIDEO SECTION (Moved Up) -->
+    <section class="section" style="padding-bottom: 0;">
         <div class="container">
-            <div style="margin-bottom: 20px; font-size: 1.5rem;">📸</div>
-            <div class="footer-links">
-                <a href="#">이용약관</a>
-                <a href="#">개인정보처리방침</a>
-                <a href="https://open.kakao.com/o/sVh8KUci" target="_blank">고객센터</a>
+            <div style="text-align: center; margin-bottom: 20px;">
+                <span class="code-font"
+                    style="color:var(--accent-primary); background:rgba(0, 243, 255, 0.1); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem;">ACTUAL
+                    FOOTAGE</span>
             </div>
-            <p style="margin-top: 30px; opacity: 0.5;">
-                &copy; 2026 InstaFlow. Developed by KYJNEO-TECH.<br>
-                모든 시스템 정상 작동 중 (All systems operational).
-            </p>
+            <div class="video-box-wrap">
+                <iframe src="https://www.youtube.com/embed/8Ro0IQ3q5lE" title="Workflow Demo" frameborder="0"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. COMPARISON SECTION -->
+    <section class="section">
+        <div class="container">
+            <div style="text-align: center; max-width: 800px; margin: 0 auto 50px;">
+                <h2 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 20px;">소중한 내 계정,<br>'싸구려 공장식 매크로'에
+                    태우시겠습니까?</h2>
+                <p style="color: var(--text-muted);">내 계정을 지키기 위해 직접 만들었습니다. 인간의 행동 패턴을 완벽히 모방합니다.</p>
+            </div>
+
+            <div style="overflow-x: auto;">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Feature</th>
+                            <th style="width: 35%; color: var(--accent-danger);">공장식 봇 (Factory Bot)</th>
+                            <th style="width: 35%; color: var(--accent-success);">InstaFlow AI</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>작동 방식</td>
+                            <td class="col-bad">단순 기계적 반복 (위험)</td>
+                            <td class="col-good">랜덤 딜레이 & 휴먼 터치</td>
+                        </tr>
+                        <tr>
+                            <td>댓글 품질</td>
+                            <td class="col-bad">"좋아요~" 무지성 도배</td>
+                            <td class="col-good">사진 분석 후 AI 자연어 생성</td>
+                        </tr>
+                        <tr>
+                            <td>계정 안전</td>
+                            <td class="col-bad">높은 정지/차단 확률</td>
+                            <td class="col-good">Safe-Guard 알고리즘 탑재</td>
+                        </tr>
+                        <tr>
+                            <td>업데이트</td>
+                            <td class="col-bad">지원 중단 되기 일쑤</td>
+                            <td class="col-good">지속적인 기능/보안 패치</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. FEATURES (Reinforcement) -->
+    <section class="section">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                <div
+                    style="background:var(--card-bg); padding:30px; border-radius:16px; border:1px solid var(--border-color);">
+                    <div style="font-size:2rem; margin-bottom:15px;">🤖</div>
+                    <h3 style="margin-bottom:10px;">Context-Aware AI</h3>
+                    <p style="color:var(--text-muted); font-size:0.9rem;">사진과 글을 이해하고 친구처럼 대화합니다.</p>
+                </div>
+                <div
+                    style="background:var(--card-bg); padding:30px; border-radius:16px; border:1px solid var(--border-color);">
+                    <div style="font-size:2rem; margin-bottom:15px;">🛡️</div>
+                    <h3 style="margin-bottom:10px;">Human Pattern</h3>
+                    <p style="color:var(--text-muted); font-size:0.9rem;">스크롤, 클릭, 대기 시간을 무작위로 섞습니다.</p>
+                </div>
+                <div
+                    style="background:var(--card-bg); padding:30px; border-radius:16px; border:1px solid var(--border-color);">
+                    <div style="font-size:2rem; margin-bottom:15px;">⚡</div>
+                    <h3 style="margin-bottom:10px;">Super Fast</h3>
+                    <p style="color:var(--text-muted); font-size:0.9rem;">당신이 자는 동안에도 24시간 쉬지 않습니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="download-footer">
+        <div class="container">
+            <h3>Ready to Deploy?</h3>
+            <p style="margin-bottom: 30px;">지금 바로 시작하세요. 3일 무료 체험이 제공됩니다.</p>
+            <button class="btn-primary" onclick="openModal()">다운로드 시작 (Free Download)</button>
+            <p style="margin-top: 40px; font-size: 0.8rem; opacity: 0.5;">&copy; 2026 InstaFlow Team. All systems
+                operational.</p>
         </div>
     </footer>
 
+    <!-- MODAL POPUP -->
+    <div class="modal-overlay" id="downloadModal">
+        <div class="modal-box">
+            <div class="modal-close" onclick="closeModal()">&times;</div>
+            <h2 style="margin-bottom: 10px;">🚀 설치 파일 준비됨</h2>
+            <p style="color: var(--text-muted); margin-bottom: 30px; font-size: 0.95rem;">
+                최신 버전 (v1.0.4) 다운로드를 시작합니다.
+            </p>
+
+            <a href="https://github.com/kyjneo-tech/InstaFlowWeb/releases/download/v1.0.3-patch/InstaFlow_Setup_v1.0.3.zip"
+                class="btn-primary" style="width: 100%; justify-content: center; margin-bottom: 20px;">
+                내 PC에 저장하기
+            </a>
+
+            <div
+                style="text-align: left; background: rgba(255, 95, 86, 0.1); padding: 15px; border-radius: 8px; font-size: 0.85rem; border: 1px solid rgba(255, 95, 86, 0.3);">
+                <strong style="color: #ffcccc; display: block; margin-bottom: 5px;">⚠️ Windows 보호 알림 해결법</strong>
+                <span style="color: #ddd;">
+                    1. 팝업에서 <u style="color:white; cursor:pointer;">'추가 정보'</u> 클릭<br>
+                    2. <u style="color:white; cursor:pointer;">'실행'</u> 버튼 클릭<br>
+                    (개인 개발자 인증서 서명 이슈로 인한 단순 경고입니다.)
+                </span>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Typing Effect
-        const textElement = document.getElementById('typing-text');
-        const texts = ["Instagram.", "소통 업무.", "댓글 관리.", "마케팅.", "Workflow."];
-        let textIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
+        // --- Virtual Interface Logic ---
+        const logs = [
+            { type: 'info', text: '[INFO] Target Found: #daily_life' },
+            { type: 'info', text: '[Analyze] Image context: Cafe, Coffee, Relax' },
+            { type: 'success', text: '[Gen] Comment: "분위기 너무 좋네요! ☕"' },
+            { type: 'success', text: '[Task] Like & Comment Posted (Delay: 12s)' },
+            { type: 'info', text: '[Sleep] Random wait for human-like behavior...' },
+            { type: 'info', text: '[INFO] Moving to next target...' }
+        ];
+        const logContainer = document.getElementById('log-container');
+        let logIndex = 0;
 
-        function type() {
-            const currentText = texts[textIndex];
+        function addLog() {
+            if (logIndex >= logs.length) logIndex = 0;
+            const log = logs[logIndex];
 
-            if (isDeleting) {
-                textElement.textContent = currentText.substring(0, charIndex - 1);
-                charIndex--;
-            } else {
-                textElement.textContent = currentText.substring(0, charIndex + 1);
-                charIndex++;
-            }
+            const div = document.createElement('div');
+            div.className = 'log-entry';
+            const time = new Date().toLocaleTimeString('en-US', { hour12: false });
 
-            if (!isDeleting && charIndex === currentText.length) {
-                isDeleting = true;
-                setTimeout(type, 2000);
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                textIndex = (textIndex + 1) % texts.length;
-                setTimeout(type, 500);
-            } else {
-                setTimeout(type, isDeleting ? 100 : 150);
-            }
+            let colorClass = log.type === 'success' ? 'log-success' : 'log-info';
+            div.innerHTML = `<span class="code-font log-time">[${time}]</span> <span class="${colorClass}">${log.text}</span>`;
+
+            logContainer.prepend(div);
+            if (logContainer.children.length > 7) logContainer.lastElementChild.remove();
+
+            logIndex++;
+            setTimeout(addLog, Math.random() * 1500 + 500);
         }
+        setTimeout(addLog, 1000);
 
-        // Start typing
-        setTimeout(type, 1000);
-
-        // Navbar Scroll Effect
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-
-        // Mouse Move Effect for Cards
-        document.querySelectorAll('.feature-card').forEach(card => {
-            card.addEventListener('mousemove', e => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                card.style.setProperty('--mouse-x', `${x}px`);
-                card.style.setProperty('--mouse-y', `${y}px`);
-            });
+        // --- Modal Logic ---
+        function openModal() {
+            document.getElementById('downloadModal').classList.add('active');
+        }
+        function closeModal() {
+            document.getElementById('downloadModal').classList.remove('active');
+        }
+        // Close on outside click
+        document.getElementById('downloadModal').addEventListener('click', function (e) {
+            if (e.target === this) closeModal();
         });
     </script>
 </body>
