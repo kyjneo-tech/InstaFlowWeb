@@ -708,21 +708,56 @@
 
         const logContainer = document.getElementById('log-container');
 
-        function createLog(text, type) {
+        function createLog(text, type, customTime = null, animate = true) {
             const div = document.createElement('div');
             div.className = 'log-entry';
-            const time = new Date().toLocaleTimeString('en-US', { hour12: false, hour: "2-digit", minute: "2-digit", second: "2-digit" });
+
+            // If pre-filling, show immediately without animation
+            if (!animate) {
+                div.style.opacity = '1';
+                div.style.animation = 'none';
+            } else {
+                div.style.opacity = '0';
+                div.style.animation = 'fadeInLog 0.5s forwards';
+            }
+
+            let time = customTime;
+            if (!time) {
+                time = new Date().toLocaleTimeString('en-US', { hour12: false, hour: "2-digit", minute: "2-digit", second: "2-digit" });
+            }
 
             let colorClass = type === 'success' ? 'log-success' : 'log-info';
-            // Specific highlighting for "Like"
             if (text.includes('❤️')) colorClass = 'log-success';
 
             div.innerHTML = `<span class="code-font log-time">[${time}]</span> <span class="${colorClass}">${text}</span>`;
 
             logContainer.prepend(div);
-            // Increased limit to show multiple scenarios (approx 2.5 cycles)
             if (logContainer.children.length > 20) logContainer.lastElementChild.remove();
         }
+
+        // Pre-fill logs to make it look busy immediately from the start
+        function prefillLogs() {
+            const now = new Date();
+            // Generate 15 past logs
+            for (let i = 15; i > 0; i--) {
+                const pastTime = new Date(now.getTime() - i * 1500);
+                const timeStr = pastTime.toLocaleTimeString('en-US', { hour12: false, hour: "2-digit", minute: "2-digit", second: "2-digit" });
+
+                const randomScenario = scenarios[Math.floor(Math.random() * scenarios.length)];
+                // Pick a random early stage action (Search, Scroll, or Analyze)
+                const actionTemplates = [actions[0], actions[1], actions[2]];
+                const randomAction = actionTemplates[Math.floor(Math.random() * actionTemplates.length)];
+
+                let text = randomAction.text;
+                if (text.includes('Searching')) text += randomScenario.tag;
+                if (text.includes('Content')) text += randomScenario.context;
+
+                createLog(text, 'info', timeStr, false);
+            }
+        }
+
+        // Run pre-fill immediately
+        prefillLogs();
 
         let step = 0;
         let currentScenario = scenarios[0];
@@ -767,8 +802,8 @@
             }
         }
 
-        // Start animation
-        setTimeout(runSequence, 1000);
+        // Start animation loop
+        setTimeout(runSequence, 500);
 
         // --- Modal Logic ---
         function openModal() {
