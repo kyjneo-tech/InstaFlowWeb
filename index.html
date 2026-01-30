@@ -558,6 +558,26 @@
                     <h3 style="margin-bottom:10px;">Human Pattern</h3>
                     <p style="color:var(--text-muted); font-size:0.9rem;">스크롤, 클릭, 대기 시간을 무작위로 섞습니다.</p>
                 </div>
+                <!-- Friendly SmartScreen Guide -->
+                <div
+                    style="text-align: left; background: rgba(255, 95, 86, 0.1); padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid rgba(255, 95, 86, 0.3);">
+                    <h3 style="color: #ff5f56; font-size: 1.1rem; margin-bottom: 10px;">🚨 잠깐! "Windows의 PC 보호" 창이 떴나요?
+                    </h3>
+                    <p style="color: #ddd; font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px;">
+                        <strong>바이러스가 아닙니다! 😅</strong><br>
+                        개인 개발자가 만든 프로그램이라 윈도우가 "처음 보는 파일인데?" 하며 알려주는 과정입니다.
+                    </p>
+                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px;">
+                        <div style="margin-bottom: 8px;">👉 <strong>1단계:</strong> 팝업창의 <u
+                                style="color:white; cursor:pointer;">'추가 정보'</u> 글씨 클릭</div>
+                        <div>👉 <strong>2단계:</strong> 하단에 생기는 <u style="color:white; cursor:pointer;">'실행'</u> 버튼 클릭
+                        </div>
+                    </div>
+                    <p
+                        style="color: var(--accent-success); font-size: 0.9rem; margin-top: 15px; font-weight: bold; text-align: center;">
+                        (안심하고 실행하셔도 됩니다!)
+                    </p>
+                </div>
                 <div
                     style="background:var(--card-bg); padding:30px; border-radius:16px; border:1px solid var(--border-color);">
                     <div style="font-size:2rem; margin-bottom:15px;">⚡</div>
@@ -654,35 +674,86 @@
     </script>
     <script>
         // --- Virtual Interface Logic ---
-        const logs = [
-            { type: 'info', text: '[INFO] Target Found: #daily_life' },
-            { type: 'info', text: '[Analyze] Image context: Cafe, Coffee, Relax' },
-            { type: 'success', text: '[Gen] Comment: "분위기 너무 좋네요! ☕"' },
-            { type: 'success', text: '[Task] Like & Comment Posted (Delay: 12s)' },
-            { type: 'info', text: '[Sleep] Random wait for human-like behavior...' },
-            { type: 'info', text: '[INFO] Moving to next target...' }
+        const scenarios = [
+            { tag: '#daily_life', context: 'Cafe, Coffee, Relax', comment: '"커피 한잔의 여유 부럽네요! ☕"', type: 'cafe' },
+            { tag: '#programmer', context: 'Laptop, Code, Python', comment: '"오늘도 코딩 화이팅입니다! 🔥"', type: 'dev' },
+            { tag: '#travel_gram', context: 'Beach, Sky, Blue', comment: '"와... 사진 색감 대박이네요 🌊"', type: 'travel' },
+            { tag: '#cat_lover', context: 'Cat, Cute, Fur', comment: '"냥이 너무 귀여워요 ㅠㅠ 😻"', type: 'pet' },
+            { tag: '#foodie', context: 'Pasta, Delicious', comment: '"비주얼 미쳤다... 맛집 정보 좀요! 🍝"', type: 'food' }
         ];
+
+        const actions = [
+            { text: '[Search] Searching target: ', type: 'info' },
+            { text: '[Scroll] Human-like scrolling... (Random: 2.4s)', type: 'info' },
+            { text: '[Analyze] Vision Engine: ', type: 'info' },
+            { text: '[Think] Generating AI context reply...', type: 'info' },
+            { text: '[Action] ❤️ Like Button Clicked', type: 'success' },
+            { text: '[Gen] Comment: ', type: 'success' },
+            { text: '[Sleep] Anti-Ban Safety Delay... 💤', type: 'info' }
+        ];
+
         const logContainer = document.getElementById('log-container');
-        let logIndex = 0;
 
-        function addLog() {
-            if (logIndex >= logs.length) logIndex = 0;
-            const log = logs[logIndex];
-
+        function createLog(text, type) {
             const div = document.createElement('div');
             div.className = 'log-entry';
-            const time = new Date().toLocaleTimeString('en-US', { hour12: false });
+            const time = new Date().toLocaleTimeString('en-US', { hour12: false, hour: "2-digit", minute: "2-digit", second: "2-digit" });
 
-            let colorClass = log.type === 'success' ? 'log-success' : 'log-info';
-            div.innerHTML = `<span class="code-font log-time">[${time}]</span> <span class="${colorClass}">${log.text}</span>`;
+            let colorClass = type === 'success' ? 'log-success' : 'log-info';
+            // Specific highlighting for "Like"
+            if (text.includes('❤️')) colorClass = 'log-success';
+
+            div.innerHTML = `<span class="code-font log-time">[${time}]</span> <span class="${colorClass}">${text}</span>`;
 
             logContainer.prepend(div);
-            if (logContainer.children.length > 7) logContainer.lastElementChild.remove();
-
-            logIndex++;
-            setTimeout(addLog, Math.random() * 1500 + 500);
+            if (logContainer.children.length > 8) logContainer.lastElementChild.remove();
         }
-        setTimeout(addLog, 1000);
+
+        let step = 0;
+        let currentScenario = scenarios[0];
+
+        function runSequence() {
+            // Randomly pick a scenario if starting
+            if (step === 0) {
+                currentScenario = scenarios[Math.floor(Math.random() * scenarios.length)];
+                createLog(`${actions[0].text} ${currentScenario.tag}`, 'info');
+                step++;
+                setTimeout(runSequence, 800);
+            }
+            else if (step === 1) {
+                createLog(actions[1].text, 'info'); // Scroll
+                step++;
+                setTimeout(runSequence, 1200);
+            }
+            else if (step === 2) {
+                createLog(`${actions[2].text} ${currentScenario.context}`, 'info'); // Analyze
+                step++;
+                setTimeout(runSequence, 1000);
+            }
+            else if (step === 3) {
+                createLog(actions[3].text, 'info'); // Think
+                step++;
+                setTimeout(runSequence, 1500);
+            }
+            else if (step === 4) {
+                createLog(actions[4].text, 'success'); // Like
+                step++;
+                setTimeout(runSequence, 600);
+            }
+            else if (step === 5) {
+                createLog(`${actions[5].text} ${currentScenario.comment}`, 'success'); // Comment
+                step++;
+                setTimeout(runSequence, 2000);
+            }
+            else if (step === 6) {
+                createLog(actions[6].text, 'info'); // Sleep
+                step = 0; // Reset
+                setTimeout(runSequence, 2500);
+            }
+        }
+
+        // Start animation
+        setTimeout(runSequence, 1000);
 
         // --- Modal Logic ---
         function openModal() {
