@@ -768,52 +768,40 @@
                     선점하세요.</p>
             </div>
 
-            <div class="pricing-grid">
-                <!-- Plan 1: Starter -->
-                <div class="pricing-card">
-                    <h3 style="font-size: 1.25rem; margin-bottom: 10px;">Starter (Full-Access)</h3>
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 25px;">성능에 대한 확신이 필요하신가요?</p>
-                    <div class="price-main">0<span class="price-unit">원 / 3일 체험</span></div>
-                    <ul class="pricing-features">
-                        <li>정식 버전과 100% 동일한 기능</li>
-                        <li>AI 지능형 라이브 답글 생성</li>
-                        <li>Safe-Guard 계정 보호 시스템</li>
-                        <li>카드 정보 입력 없이 즉시 시작</li>
-                    </ul>
-                    <button class="btn-primary"
-                        style="background: transparent; border: 1px solid var(--border-color); box-shadow: none;"
-                        onclick="openModal()">
-                        무료로 시작하기
-                    </button>
-                </div>
-
-                <!-- Plan 2: Early Bird -->
+            <div class="pricing-grid"
+                style="grid-template-columns: 1fr; max-width: 500px; margin-left: auto; margin-right: auto;">
+                <!-- Plan: Early Bird 1st Round -->
                 <div class="pricing-card featured">
-                    <h3 style="font-size: 1.5rem; margin-bottom: 10px; color: var(--accent-primary);">Premium Pass</h3>
+                    <h3 style="font-size: 1.5rem; margin-bottom: 10px; color: var(--accent-primary);">Premium Pass
+                        (Full-Access)</h3>
                     <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">비즈니스 성장의 무한한 동력</p>
-                    <div class="price-anchor">29,900원</div>
-                    <div class="price-main">4,900<span class="price-unit">원 / 월</span></div>
+                    <div class="price-anchor" style="color: #ff5f56; text-decoration: line-through;">정상가 29,900원</div>
+                    <div class="price-main">4,900<span class="price-unit">원 / 30일</span></div>
                     <ul class="pricing-features">
+                        <li><strong>정식 버전과 100% 동일한 모든 기능</strong></li>
                         <li><strong>AI 지능형 댓글/좋아요 무제한</strong></li>
-                        <li><strong>성별 중립/맞춤형 소통 지능</strong></li>
-                        <li><strong>업데이트 평생 우선 지원</strong></li>
-                        <li><strong>프리미엄 서버 트래픽 할당</strong></li>
+                        <li><strong>Safe-Guard 계정 보호 시스템</strong></li>
+                        <li><strong>업데이트 평생 우선 지원 권한</strong></li>
+                        <li><strong>프리미엄 서버 트래픽 우선 할당</strong></li>
                     </ul>
                     <button class="btn-primary" onclick="openModal()">
-                        지금 얼리버드 혜택 받기
+                        지금 얼리버드 혜택으로 시작하기
                     </button>
 
                     <div class="urgency-badge">
                         <div
-                            style="display:flex; justify-content:space-between; font-size: 0.8rem; margin-bottom: 5px;">
+                            style="display:flex; justify-content:space-between; font-size: 0.85rem; margin-bottom: 8px;">
                             <span style="color: var(--accent-danger); font-weight:800;">🚨 1차 얼리버드 마감 임박</span>
-                            <span style="color: var(--text-muted);">88 / 100</span>
+                            <span style="color: var(--text-muted); font-weight: bold;">92 / 100</span>
                         </div>
                         <div class="progress-bar-wrap">
-                            <div class="progress-bar-fill"></div>
+                            <div class="progress-bar-fill" style="width: 92%;"></div>
                         </div>
-                        <p style="font-size: 0.75rem; color: var(--text-muted); margin: 8px 0 0; text-align: center;">*
-                            선착순 100명 이후 2차 가격(14,900원)으로 자동 전환됩니다.</p>
+                        <p
+                            style="font-size: 0.8rem; color: #ff9999; margin: 12px 0 0; text-align: center; font-weight: bold; line-height: 1.4;">
+                            * 선착순 100명 종료 후 즉시<br>
+                            2차 할인가(9,900원)로 가격이 인상됩니다.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -1103,6 +1091,19 @@
         document.getElementById('downloadModal').addEventListener('click', function (e) {
             if (e.target === this) closeModal();
         });
+
+        // --- Early Bird Sync (사용자 요청에 따라 수동 관리 체제로 롤백) ---
+        function syncEarlyBirdStats() {
+            // 서버 연동 취소: 정해진 수량을 수동으로 노출
+            const remaining = 88;
+            const totalSlots = 100;
+
+            document.getElementById('earlybird-count').innerText = `${remaining} / ${totalSlots}`;
+            const progressPercent = (remaining / totalSlots) * 100;
+            document.getElementById('earlybird-progress').style.width = `${progressPercent}%`;
+            console.log(`[Stats Sync] Manual Mode: ${remaining} / ${totalSlots}`);
+        }
+        document.addEventListener('DOMContentLoaded', syncEarlyBirdStats);
     </script>
 </body>
 
