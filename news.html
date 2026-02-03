@@ -4,184 +4,217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>서비스 안내</title>
+    <title>InstaFlow - 공식 업데이트 및 서비스 안내</title>
     <meta name="robots" content="noindex, nofollow">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
     <style>
+        :root {
+            --bg-color: #050505;
+            --card-bg: rgba(20, 20, 25, 0.8);
+            --accent-primary: #00f3ff;
+            --accent-secondary: #bc13fe;
+            --accent-success: #0aff0a;
+            --accent-danger: #ff5f56;
+            --text-main: #ffffff;
+            --text-muted: #8892b0;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
             line-height: 1.6;
-            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
+            padding: 20px;
+        }
+
+        /* Background Effects */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
         }
 
         .container {
-            max-width: 550px;
-            background: white;
+            max-width: 600px;
+            width: 100%;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
             padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            border-top: 5px solid #ff6b6b;
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 20px;
+            right: 20px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(0, 243, 255, 0.1);
+            color: var(--accent-primary);
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
         }
 
         h1 {
-            font-size: 1.4rem;
-            margin-bottom: 25px;
-            color: #c92a2a;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+            line-height: 1.3;
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         p {
-            margin-bottom: 15px;
-            color: #495057;
-            font-size: 0.95rem;
-            text-align: justify;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            font-size: 1rem;
         }
 
-        .highlight-box {
-            background-color: #fff9db;
+        .update-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
             padding: 20px;
-            border-radius: 8px;
-            margin: 25px 0;
-            border: 1px solid #ffe066;
+            margin-bottom: 30px;
         }
 
-        .btn {
-            display: block;
-            width: 100%;
-            background-color: #228be6;
-            color: white;
-            padding: 16px;
-            border-radius: 8px;
-            text-decoration: none;
+        .update-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+
+        .update-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .check-icon {
+            color: var(--accent-success);
             font-weight: bold;
-            text-align: center;
+        }
+
+        .btn-primary {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            padding: 18px;
+            border-radius: 14px;
+            text-decoration: none;
+            font-weight: 700;
             font-size: 1.1rem;
-            box-sizing: border-box;
-            transition: 0.2s;
+            transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(188, 19, 254, 0.2);
+            margin-bottom: 15px;
         }
 
-        .btn:hover {
-            background-color: #1c7ed6;
-            transform: translateY(-2px);
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(188, 19, 254, 0.4);
         }
 
-        .sub-text {
+        .btn-secondary {
+            display: block;
             text-align: center;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .btn-secondary:hover {
+            color: var(--text-main);
+        }
+
+        .security-tip {
+            margin-top: 30px;
+            background: rgba(255, 95, 86, 0.05);
+            border: 1px solid rgba(255, 95, 86, 0.2);
+            border-radius: 12px;
+            padding: 15px;
             font-size: 0.85rem;
-            color: #868e96;
-            margin-top: 15px;
+        }
+
+        .security-tip b {
+            color: var(--accent-danger);
         }
     </style>
 </head>
 
 <body>
+    <div class="bg-grid"></div>
+
     <div class="container">
-        <h1>⚠️ 무료 서버 트래픽 초과 안내</h1>
+        <div class="tag">System Update</div>
+        <h1>더 강력하고 안전한<br><span class="text-gradient">InstaFlow 정식 버전 출시</span></h1>
 
-        <p>안녕하세요, InstaFlow 개발자입니다.</p>
+        <p>안녕하세요, InstaFlow 팀입니다.<br>
+            성장하는 사용자 규모에 맞춰 <b>안정적인 대규모 인프라와 전용 서버</b>를 구축하고 v1.0.4 정식 업데이트를 공개합니다.</p>
 
-        <p>먼저 이용에 불편을 드려 진심으로 죄송합니다.<br>
-            예상보다 너무 많은 <strong>사용자님들이</strong> 동시에 접속하시는 바람에, <strong>제가 개인적으로 부담하고 있는 무료 서버의 트래픽 한도가 초과</strong>되어
-            버렸습니다.</p>
-
-        <p>제 사비로 서버비를 충당하고 있었으나, 감당하기 어려운 수준에 이르러 부득이하게 무료 배포 버전을 중단하게 되었습니다.</p>
-
-        <div class="highlight-box">
-            <strong>☕ 업무가 급하신가요?</strong>
-            <p style="margin-top: 10px; margin-bottom: 0; font-size: 0.9rem;">
-                염치없지만... <strong>월 커피 한 잔 값 정도(소액)만 후원</strong>해 주실 수 있으신가요?<br><br>
-                후원해 주시는 분들을 위해 <strong>서버 용량을 증설한 전용 버전</strong>을 준비했습니다.<br>
-                (강요는 절대 아니며, 필요하신 분들만 부탁드립니다.)
-            </p>
+        <div class="update-box">
+            <div class="update-item"><span class="check-icon">✓</span> AI 댓글 지능 및 성별 중립성 대폭 강화</div>
+            <div class="update-item"><span class="check-icon">✓</span> 계정 삭제 및 라이선스 갱신 버그 해결</div>
+            <div class="update-item"><span class="check-icon">✓</span> 윈도우 탭 인식 정확도 향상</div>
+            <div class="update-item"><span class="check-icon">✓</span> 트래픽 무제한 전용 서버 가동</div>
         </div>
 
-        <!-- 정식 버전 다운로드 링크 -->
         <a href="https://github.com/kyjneo-tech/InstaFlowWeb/releases/download/v1.0.4/InstaFlow_Setup_v1.0.4.zip"
-            class="btn">
-            전용 버전 다운로드 (클릭)
+            class="btn-primary">
+            정식 버전 바로 다운로드
         </a>
-        <p class="sub-text">
-            <strong>※ 사용 방법:</strong> 위 파일을 다운로드 후 실행하여,<br>
-            프로그램 내 <strong>[후원하기/기간연장]</strong> 버튼을 눌러주세요.<br>
-            (기존 데이터는 그대로 유지됩니다)
-        </p>
 
-        <!-- Windows Defender 경고 안내 박스 -->
-        <style>
-            .security-guide {
-                background-color: #fff5f5;
-                border: 2px solid #ffc9c9;
-                border-radius: 12px;
-                padding: 20px;
-                margin-top: 30px;
-                text-align: left;
-                animation: fadeIn 0.5s ease-in;
-            }
+        <a href="index.html" class="btn-secondary">
+            정식 출시 페이지 둘러보기 →
+        </a>
 
-            .security-title {
-                color: #fa5252;
-                font-weight: 700;
-                margin-bottom: 12px;
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                font-size: 1.05rem;
-            }
-
-            .security-desc {
-                font-size: 0.95rem;
-                color: #495057;
-                margin-bottom: 15px;
-                line-height: 1.5;
-            }
-
-            .action-step {
-                background: white;
-                padding: 10px 15px;
-                border-radius: 8px;
-                border: 1px solid #ffec99;
-                font-size: 0.95rem;
-                color: #333;
-                font-weight: 600;
-                margin-bottom: 8px;
-            }
-
-            .highlight {
-                color: #228be6;
-                background: #e7f5ff;
-                padding: 2px 6px;
-                border-radius: 4px;
-            }
-        </style>
-
-        <div class="security-guide">
-            <div class="security-title">
-                🚨 잠깐! "Windows의 PC 보호" 창이 떴나요?
-            </div>
-            <div class="security-desc">
-                바이러스가 아닙니다! 😅<br>
-                개인 개발자가 만든 프로그램이라 윈도우가 "처음 보는 파일인데?" 하며 알려주는 과정입니다.
-            </div>
-
-            <div class="action-step">
-                👉 1단계: 팝업창의 <span class="highlight">추가 정보</span> 글씨 클릭
-            </div>
-            <div class="action-step">
-                👉 2단계: 하단에 생기는 <span class="highlight">실행</span> 버튼 클릭
-            </div>
-            <div style="text-align: center; margin-top: 10px; font-size: 0.85rem; color: #868e96;">
-                (안심하고 실행하셔도 됩니다!)
-            </div>
+        <div class="security-tip">
+            <b>💡 설치 시 팁:</b> 개인 개발자 파일이라 'Windows 보호' 창이 뜰 수 있습니다. <b>[추가 정보]</b> 버튼을 누른 후 <b>[실행]</b>을 클릭하시면 안전하게 이용
+            가능합니다. (V3 정밀검사 통과 완료)
         </div>
     </div>
 </body>
